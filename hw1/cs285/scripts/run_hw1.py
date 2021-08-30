@@ -1,6 +1,6 @@
 import os
 import time
-import yaml
+
 from cs285.infrastructure.rl_trainer import RL_Trainer
 from cs285.agents.bc_agent import BCAgent
 from cs285.policies.loaded_gaussian_policy import LoadedGaussianPolicy
@@ -80,16 +80,10 @@ def main():
     parser.add_argument('--max_replay_buffer_size', type=int, default=1000000)
     parser.add_argument('--save_params', action='store_true')
     parser.add_argument('--seed', type=int, default=1)
-    parser.add_argument('--config', type=str, required=False)
-
     args = parser.parse_args()
 
     # convert args to dictionary
     params = vars(args)
-    if args.config:
-        with open(args.config) as f:
-            config = yaml.safe_load(f)
-        params.update(config)
 
     ##################################
     ### CREATE DIRECTORY FOR LOGGING
