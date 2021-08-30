@@ -1,1 +1,1 @@
-# berkeley-cs285-deep-reinforcement-learning
+Assignments for [Berkeley CS 285: Deep Reinforcement Learning, Decision Making, and Control](http://rail.eecs.berkeley.edu/deeprlcourse/).
