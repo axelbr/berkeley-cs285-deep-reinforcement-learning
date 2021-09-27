@@ -13,6 +13,7 @@ Both policies were trained with the same hyperparameter configuration
 (see [bc_ant.yml](part1/bc_ant.yml) and [bc_humanoid.yml](part1/bc_humanoid.yml)) and evaluated over 10 episodes.
 
 ![Q1.3](part1/img.png)
+
 *Figure 1:* After experimenting with various configurations for batch size and model architecture, I figured out that
 increasing the update rate of the policy per iteration had a drastic impact on the performance. This is especially true
 for higher batch sizes, while for smaller batch sizes, more iterations can have a negative impact due to overfitting. 
