@@ -1,0 +1,20 @@
+expert_policy_file: "cs285/policies/experts/Ant.pkl"
+expert_data: "cs285/expert_data/expert_data_Ant-v2.pkl"
+env_name: "Ant-v2"
+do_dagger: false
+n_iter: 1
+video_log_freq: -1
+scalar_log_freq: 1
+save_params: true
+seed: 1
+
+# Tuneable args
+num_agent_train_steps_per_iter: 30000 # 1000, 3000, 5000, 8000, 11000, 15000, 19000, 25000
+batch_size: 45000 # training results collected (in the env) during each iteration
+eval_batch_size: 10000 # eval results collected (in the env) for logging metrics
+train_batch_size: 100 # number of sampled results points to be used per gradient/train step
+n_layers: 3 # depth, of policy to be learned
+size: 128 # width of each layer, of policy to be learned
+learning_rate: 5.e-3 # LR for supervised learning
+
+

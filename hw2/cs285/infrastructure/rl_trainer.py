@@ -135,10 +135,10 @@ class RL_Trainer(object):
             paths, envsteps_this_batch, train_video_paths = training_returns
             self.total_envsteps += envsteps_this_batch
 
-            # add collected data to replay buffer
+            # add collected results to replay buffer
             self.agent.add_to_replay_buffer(paths)
 
-            # train agent (using sampled data from replay buffer)
+            # train agent (using sampled results from replay buffer)
             train_logs = self.train_agent()
 
             # log/save
@@ -169,7 +169,7 @@ class RL_Trainer(object):
         #######################
 
         # collect eval trajectories, for logging
-        print("\nCollecting data for eval...")
+        print("\nCollecting results for eval...")
         eval_paths, eval_envsteps_this_batch = utils.sample_trajectories(self.env, eval_policy, self.params['eval_batch_size'], self.params['ep_len'])
 
         # save eval rollouts as videos in tensorboard event file

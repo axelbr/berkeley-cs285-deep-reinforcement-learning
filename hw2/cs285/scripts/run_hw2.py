@@ -100,7 +100,7 @@ def main():
 
     logdir_prefix = 'q2_pg_'  # keep for autograder
 
-    data_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../data')
+    data_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../results')
 
     if not (os.path.exists(data_path)):
         os.makedirs(data_path)
