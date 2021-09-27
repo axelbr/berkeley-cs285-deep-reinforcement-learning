@@ -10,9 +10,9 @@ seed: 1
 
 # Tuneable args
 num_agent_train_steps_per_iter: 134 # number of gradient steps for training policy (per iter in n_iter)
-batch_size: 1500 # training results collected (in the env) during each iteration
-eval_batch_size: 10000 # eval results collected (in the env) for logging metrics
-train_batch_size: 100 # number of sampled results points to be used per gradient/train step
+batch_size: 1500 # training data collected (in the env) during each iteration
+eval_batch_size: 10000 # eval data collected (in the env) for logging metrics
+train_batch_size: 100 # number of sampled data points to be used per gradient/train step
 n_layers: 3 # depth, of policy to be learned
 size: 128 # width of each layer, of policy to be learned
 learning_rate: 5.e-3 # LR for supervised learning

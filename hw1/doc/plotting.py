@@ -37,9 +37,9 @@ def plot_q2():
     }
 
     def plot(env, log_scale=False):
-        with open(f'results/q1_bc_{env}.json') as f:
+        with open(f'data/q1_bc_{env}.json') as f:
             bc_data = json.load(f)
-        with open(f'results/q2_dagger_{env}.json') as f:
+        with open(f'data/q2_dagger_{env}.json') as f:
             dagger_data = json.load(f)
 
         dagger_avg = np.array(dagger_data['avg_return'])

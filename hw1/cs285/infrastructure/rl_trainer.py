@@ -116,10 +116,10 @@ class RL_Trainer(object):
             if relabel_with_expert and itr >= start_relabel_with_expert:
                 paths = self.do_relabel_with_expert(expert_policy, paths)  # HW1: implement this function below
 
-            # add collected results to replay buffer
+            # add collected data to replay buffer
             self.agent.add_to_replay_buffer(paths)
 
-            # train agent (using sampled results from replay buffer)
+            # train agent (using sampled data from replay buffer)
             training_logs = self.train_agent()  # HW1: implement this function below
 
             # log/save
@@ -146,26 +146,26 @@ class RL_Trainer(object):
     ):
         """
         :param itr:
-        :param load_initial_expertdata:  path to expert results pkl file
-        :param collect_policy:  the current policy using which we collect results
+        :param load_initial_expertdata:  path to expert data pkl file
+        :param collect_policy:  the current policy using which we collect data
         :param batch_size:  the number of transitions we collect
         :return:
             paths: a list trajectories
             envsteps_this_batch: the sum over the numbers of environment steps in paths
             train_video_paths: paths which also contain videos for visualization purposes
         """
-        # decide whether to load training results or use the current policy to collect more results
+        # decide whether to load training data or use the current policy to collect more data
         # HINT: depending on if it's the first iteration or not, decide whether to either
-        # (1) load the results. In this case you can directly return as follows
+        # (1) load the data. In this case you can directly return as follows
         # ``` return loaded_paths, 0, None ```
         # (2) collect `self.params['batch_size']` transitions
 
         if itr == 0 and load_initial_expertdata is not None:
-            print("\nLoading expert results from file...")
+            print("\nLoading expert data from file...")
             paths = np.load(load_initial_expertdata, allow_pickle=True)
             envsteps_this_batch = 0
         else:
-            print("\nCollecting results to be used for training...")
+            print("\nCollecting data to be used for training...")
             paths, envsteps_this_batch = utils.sample_trajectories(
                 env=self.env,
                 policy=collect_policy,
@@ -183,7 +183,7 @@ class RL_Trainer(object):
         return paths, envsteps_this_batch, train_video_paths
 
     def train_agent(self):
-        print('\nTraining agent using sampled results from replay buffer...')
+        print('\nTraining agent using sampled data from replay buffer...')
         all_logs = []
         for train_step in range(self.params['num_agent_train_steps_per_iter']):
             ob_batch, ac_batch, re_batch, next_ob_batch, terminal_batch = self.agent.sample(self.params['train_batch_size'])
@@ -207,7 +207,7 @@ class RL_Trainer(object):
     def perform_logging(self, itr, paths, eval_policy, train_video_paths, training_logs):
 
         # collect eval trajectories, for logging
-        print("\nCollecting results for eval...")
+        print("\nCollecting data for eval...")
         eval_paths, eval_envsteps_this_batch = utils.sample_trajectories(self.env, eval_policy,
                                                                          self.params['eval_batch_size'],
                                                                          self.params['ep_len'])

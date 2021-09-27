@@ -109,9 +109,9 @@ def unnormalize(data, mean, std):
 
 def add_noise(data_inp, noiseToSignal=0.01):
 
-    data = copy.deepcopy(data_inp) #(num results points, dim)
+    data = copy.deepcopy(data_inp) #(num data points, dim)
 
-    #mean of results
+    #mean of data
     mean_data = np.mean(data, axis=0)
 
     #if mean is 0,
