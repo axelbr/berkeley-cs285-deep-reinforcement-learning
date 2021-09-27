@@ -1,6 +1,6 @@
 import os
 import time
-
+import yaml
 from cs285.infrastructure.rl_trainer import RL_Trainer
 from cs285.agents.bc_agent import BCAgent
 from cs285.policies.loaded_gaussian_policy import LoadedGaussianPolicy
@@ -63,11 +63,11 @@ def main():
     parser.add_argument('--num_agent_train_steps_per_iter', type=int, default=1000)  # number of gradient steps for training policy (per iter in n_iter)
     parser.add_argument('--n_iter', '-n', type=int, default=1)
 
-    parser.add_argument('--batch_size', type=int, default=1000)  # training data collected (in the env) during each iteration
+    parser.add_argument('--batch_size', type=int, default=1000)  # training results collected (in the env) during each iteration
     parser.add_argument('--eval_batch_size', type=int,
-                        default=1000)  # eval data collected (in the env) for logging metrics
+                        default=1000)  # eval results collected (in the env) for logging metrics
     parser.add_argument('--train_batch_size', type=int,
-                        default=100)  # number of sampled data points to be used per gradient/train step
+                        default=100)  # number of sampled results points to be used per gradient/train step
 
     parser.add_argument('--n_layers', type=int, default=2)  # depth, of policy to be learned
     parser.add_argument('--size', type=int, default=64)  # width of each layer, of policy to be learned
@@ -80,10 +80,16 @@ def main():
     parser.add_argument('--max_replay_buffer_size', type=int, default=1000000)
     parser.add_argument('--save_params', action='store_true')
     parser.add_argument('--seed', type=int, default=1)
+    parser.add_argument('--config', type=str, required=False)
+
     args = parser.parse_args()
 
     # convert args to dictionary
     params = vars(args)
+    if args.config:
+        with open(args.config) as f:
+            config = yaml.safe_load(f)
+        params.update(config)
 
     ##################################
     ### CREATE DIRECTORY FOR LOGGING
@@ -96,7 +102,7 @@ def main():
     else:
         # Use this prefix when submitting. The auto-grader uses this prefix.
         logdir_prefix = 'q1_'
-        assert args.n_iter==1, ('Vanilla behavior cloning collects expert data just once (n_iter=1)')
+        assert args.n_iter==1, ('Vanilla behavior cloning collects expert results just once (n_iter=1)')
 
     ## directory for logging
     data_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../data')
