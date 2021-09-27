@@ -7,6 +7,7 @@
 | Return (mean/std) | 4511.08 ± 104.08 |  314.82 ±  61.16 |
 | Expert Normalized Return | 95.68% | 3.04%  |
 *Table 1:* Restults for *Ant-v2* and *Humanoid-v2*. 
+
 Both policies were trained with the same hyperparameter configuration
 (see [bc_ant.yml](part1/bc_ant.yml) and [bc_humanoid.yml](part1/bc_humanoid.yml)) and evaluated over 10 episodes.
 
