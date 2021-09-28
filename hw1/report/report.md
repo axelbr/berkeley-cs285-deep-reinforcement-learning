@@ -10,20 +10,20 @@
 *Table 1:* Restults for *Ant-v2* and *Humanoid-v2*. 
 
 Both policies were trained with the same hyperparameter configuration
-(see [bc_ant.yml](part1/bc_ant.yml) and [bc_humanoid.yml](part1/bc_humanoid.yml)) and evaluated over 10 episodes.
+(see [bc_ant.yml](parameters/bc_ant.yml) and [bc_humanoid.yml](parameters/bc_humanoid.yml)) and evaluated over 10 episodes.
 
-![Q1.3](part1/img.png)
+![Q1.3](figures/img.png)
 
 *Figure 1:* After experimenting with various configurations for batch size and model architecture, I figured out that
 increasing the update rate of the policy per iteration had a drastic impact on the performance. This is especially true
 for higher batch sizes, while for smaller batch sizes, more iterations can have a negative impact due to overfitting. 
-Hyperparameters for this plot can be found in [bc_ant_iterations.yml](part1/bc_ant_iterations.yml).
+Hyperparameters for this plot can be found in [bc_ant_iterations.yml](parameters/bc_ant_iterations.yml).
 
 ## Question 2
 
-![](part2/ant.png)
+![](figures/ant.png)
 
-![](part2/humanoid.png)
+![](figures/humanoid.png)
 
 The figures above show the performance of the Dagger policy compared to pure behavior cloning and the expert's performance.
 Dagger was trained with the same hyperparameters for 30 iterations for both tasks. The amount of gradient steps and the
