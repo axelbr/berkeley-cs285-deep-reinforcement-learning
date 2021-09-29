@@ -76,6 +76,7 @@ class MLPPolicy(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
             )
         else:
             self.baseline = None
+        self.device = ptu.device
 
     ##################################
 
@@ -90,8 +91,8 @@ class MLPPolicy(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
             observation = obs
         else:
             observation = obs[None]
-
-        action_dist = self.forward(ptu.from_numpy(observation))
+        observation = ptu.from_numpy(observation).to(self.device)
+        action_dist = self.forward(observation)
         action = action_dist.sample()
         return ptu.to_numpy(action)
 
@@ -166,7 +167,8 @@ class MLPPolicyPG(MLPPolicy):
 
             targets = ptu.from_numpy(q_values)
             targets = (targets - targets.mean()) / targets.std()
-            baseline_loss = torch.pow(targets - self.baseline(observations), 2.0).mean()
+            values = self.baseline(observations).squeeze(-1)
+            baseline_loss = F.mse_loss(input=values, target=targets)
             self.baseline_optimizer.zero_grad()
             baseline_loss.backward()
             self.baseline_optimizer.step()
