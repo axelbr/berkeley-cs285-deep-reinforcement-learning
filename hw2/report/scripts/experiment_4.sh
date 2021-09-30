@@ -14,18 +14,21 @@ function run_search() {
 
 # run_search
 
-python cs285/scripts/run_hw2.py --env_name HalfCheetah-v2 --ep_len 150 \
-  --discount 0.95 -n 100 -l 2 -s 32 -b $1 -lr $2 \
-  --exp_name q4_b$1_r
+batch=$1
+lr=$2
 
 python cs285/scripts/run_hw2.py --env_name HalfCheetah-v2 --ep_len 150 \
-  --discount 0.95 -n 100 -l 2 -s 32 -b $1 -lr $2 -rtg \
-  --exp_name q4_b$1_r$2_rtg
+  --discount 0.95 -n 100 -l 2 -s 32 -b ${batch} -lr ${lr} \
+  --exp_name q4_b${batch}_r${lr} --n_workers 5
 
 python cs285/scripts/run_hw2.py --env_name HalfCheetah-v2 --ep_len 150 \
-  --discount 0.95 -n 100 -l 2 -s 32 -b $1 -lr $2 --nn_baseline \
-  --exp_name q4_b$1_r$2_nnbaseline
+  --discount 0.95 -n 100 -l 2 -s 32 -b ${batch} -lr ${lr} -rtg \
+  --exp_name q4_b${batch}_r${lr}_rtg --n_workers 5
 
 python cs285/scripts/run_hw2.py --env_name HalfCheetah-v2 --ep_len 150 \
-  --discount 0.95 -n 100 -l 2 -s 32 -b $1 \
-  --exp_name q4_b$1_r$2_rtg_nnbaseline
+  --discount 0.95 -n 100 -l 2 -s 32 -b ${batch} -lr ${lr} --nn_baseline \
+  --exp_name q4_b${batch}_r${lr}_nnbaseline --n_workers 5
+
+python cs285/scripts/run_hw2.py --env_name HalfCheetah-v2 --ep_len 150 \
+  --discount 0.95 -n 100 -l 2 -s 32 -b ${batch} -lr ${lr} -rtg --nn_baseline \
+  --exp_name q4_b${batch}_r${lr}_rtg_nnbaseline --n_workers 5

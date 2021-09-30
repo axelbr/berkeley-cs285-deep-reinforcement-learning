@@ -2,6 +2,8 @@ import multiprocessing
 import os
 import time
 
+import torch
+
 from cs285.infrastructure.rl_trainer import RL_Trainer
 from cs285.agents.pg_agent import PGAgent
 
@@ -91,6 +93,8 @@ def main():
 
     # convert to dictionary
     params = vars(args)
+    if params['n_workers'] > 1:
+        torch.multiprocessing.set_start_method('spawn')
 
     # for policy gradient, we made a design decision
     # to force batch_size = train_batch_size
