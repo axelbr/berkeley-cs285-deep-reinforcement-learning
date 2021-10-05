@@ -55,7 +55,7 @@ class RL_Trainer(object):
         if 'env_wrappers' in self.params:
             # These operations are currently only for Atari envs
             self.env = wrappers.Monitor(self.env, os.path.join(self.params['logdir'], "gym"), force=True)
-            self.env.enabled = (self.params['video_log_freq'] > 0)
+            #self.env.enabled = (self.params['video_log_freq'] > 0)
             self.env = params['env_wrappers'](self.env)
             self.mean_episode_reward = -float('nan')
             self.best_mean_episode_reward = -float('inf')
@@ -220,7 +220,7 @@ class RL_Trainer(object):
         return paths, envsteps_this_batch, train_video_paths
 
     def train_agent(self):
-        print('\nTraining agent using sampled data from replay buffer...')
+        #print('\nTraining agent using sampled data from replay buffer...')
         all_logs = []
         for train_step in range(self.params['num_agent_train_steps_per_iter']):
             ob_batch, ac_batch, re_batch, next_ob_batch, terminal_batch = self.agent.sample(
@@ -244,10 +244,10 @@ class RL_Trainer(object):
 
         logs["Train_EnvstepsSoFar"] = self.agent.t
         print("Timestep %d" % (self.agent.t,))
-        if self.mean_episode_reward > -5000:
+        if self.mean_episode_reward > -5000 or True:
             logs["Train_AverageReturn"] = np.mean(self.mean_episode_reward)
         print("mean reward (100 episodes) %f" % self.mean_episode_reward)
-        if self.best_mean_episode_reward > -5000:
+        if self.best_mean_episode_reward > -5000 or True:
             logs["Train_BestReturn"] = np.mean(self.best_mean_episode_reward)
         print("best mean reward %f" % self.best_mean_episode_reward)
 
