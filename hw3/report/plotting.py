@@ -22,7 +22,7 @@ def plot_q2():
 
     plt.xlabel('steps')
     plt.ylabel('Average Return')
-    plt.title('Queston 2: Double DQN')
+    plt.title('Question 2: Double DQN')
 
     for algorithm, label in [('dqn', 'DQN'), ('doubledqn', 'Double DQN')]:
         steps, avg, std = aggregate_seeds(algorithm)
