@@ -50,8 +50,8 @@ class MLPPolicy(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
         else:
             self.logits_na = None
             self.mean_net = ptu.build_mlp(input_size=self.ob_dim,
-                                      output_size=self.ac_dim,
-                                      n_layers=self.n_layers, size=self.size)
+                                          output_size=self.ac_dim,
+                                          n_layers=self.n_layers, size=self.size)
             self.logstd = nn.Parameter(
                 torch.zeros(self.ac_dim, dtype=torch.float32, device=ptu.device)
             )
@@ -126,6 +126,27 @@ class MLPPolicy(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
 
 
 class MLPPolicyAC(MLPPolicy):
+
+    def __init__(self, ac_dim, ob_dim, n_layers, size, discrete=False, learning_rate=1e-4, training=True, **kwargs):
+        super(MLPPolicyAC, self).__init__(ac_dim, ob_dim, n_layers, size, discrete, learning_rate, training, **kwargs)
+        self.device = ptu.device
+
     def update(self, observations, actions, adv_n=None):
-        # TODO: update the policy and return the loss
-        return loss.item()
+
+        # update the policy using policy gradient
+        # HINT1: Recall that the expression that we want to MAXIMIZE
+        # is the expectation over collected trajectories of:
+        # sum_{t=0}^{T-1} [grad [log pi(a_t|s_t) * (Q_t - b_t)]]
+        # HINT2: you will want to use the `log_prob` method on the distribution returned
+        # by the `forward` method
+        # HINT3: don't forget that `optimizer.step()` MINIMIZES a loss
+        # HINT4: use self.optimizer to optimize the loss. Remember to
+        # 'zero_grad' first
+
+        log_pi = self.forward(observations).log_prob(actions)
+        loss = -(log_pi * adv_n).mean()
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+
+        return ptu.to_numpy(loss)

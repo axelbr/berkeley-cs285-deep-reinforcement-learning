@@ -1,6 +1,7 @@
 import glob
 import json
 from typing import Any
+import os
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -32,6 +33,27 @@ def plot_q2():
     plt.legend()
     plt.savefig('figures/q2_ddqn.svg')
 
+def plot_q4():
+
+    def plot(path: str):
+        data = load_data(path)
+        avg, std, steps = np.array(data['Eval_AverageReturn']), np.array(data['Eval_StdReturn']), np.array(data['Train_EnvstepsSoFar'])
+        avg, std, steps = avg[:, -1], std[:, -1], steps[:, -1]
+        target_updates = os.path.basename(path).split('_')[1]
+        gradient_updates = os.path.basename(path).split('_')[2]
+        plt.plot(steps, avg, label=f'ntu={target_updates}, ngsptu={gradient_updates}')
+        plt.fill_between(steps, avg - std, avg + std, alpha=0.2)
+
+    plt.xlabel('steps')
+    plt.ylabel('Average Return')
+    plt.title('Question 4: Actor Critic Cartpole')
+
+    for log in glob.glob('results/question_4/*.json'):
+        plot(log)
+
+    plt.legend(loc='upper left')
+    plt.savefig('figures/q4_cartpole.svg')
+
 
 if __name__ == '__main__':
-    plot_q2()
+    plot_q4()
