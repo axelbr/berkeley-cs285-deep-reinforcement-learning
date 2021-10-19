@@ -60,6 +60,39 @@ def plot_q3():
     plt.legend()
     plt.savefig('figures/q3.svg')
 
+def plot_q4():
+    params = {
+        'ensemble': 'Ensemble Size',
+        'numseq': 'No. of candidate action sequences',
+        'horizon': 'Planning Horizon'
+    }
+
+    def plot_param(param: str):
+
+        def plot(file: str):
+            data = load_data(file)
+            value = re.search(fr'_{param}(.*?)_', file).group(1)
+            label = f'{param}={value}'
+            avg, std = np.array(data['Eval_AverageReturn']), np.array(data['Eval_StdReturn'])
+            steps = avg[:, 1].astype(int)
+            avg, std = avg[:, -1], std[:, -1]
+            plt.plot(steps, avg, label=label)
+            plt.fill_between(steps, avg - std, avg + std, alpha=0.2)
+
+        plt.xlabel('Epochs')
+        plt.ylabel('Returns')
+        plt.title(f'{params[param]}')
+
+        for file in glob.glob(f'results/q4/*_{param}*.json'):
+            plot(file)
+
+        plt.legend()
+        plt.savefig(f'figures/q4_{param}.svg')
+        plt.cla()
+
+    for param in params.keys():
+        plot_param(param)
+
 def plot_q5():
 
     def plot(file: str):
@@ -88,4 +121,4 @@ def plot_q5():
     plt.savefig('figures/q5.svg')
 
 if __name__ == '__main__':
-    plot_q5()
+    plot_q4()

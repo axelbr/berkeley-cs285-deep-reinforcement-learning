@@ -23,6 +23,15 @@ Figure 3: Model Predictions of the 2x250 architecture.
 
 ![](figures/q3.svg)
 
+## Problem 4: Hyperparameters
+
+![](figures/q4_ensemble.svg)
+
+![](figures/q4_horizon.svg)
+
+![](figures/q4_numseq.svg)
+
+
 ## Problem 5: Random Shooting vs. CEM
 
 ![](figures/q5.svg)
