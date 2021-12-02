@@ -70,7 +70,7 @@ class MPCPolicy(BasePolicy):
             elites = select_elites(A=A, obs=obs, num_elites=self.cem_num_elites)
             elite_mean, elite_var = elites.mean(axis=0), elites.var(axis=0)
 
-            for i in range(self.cem_iterations - 1):
+            for i in range(self.cem_iterations):
                 # - Sample candidate sequences from a Gaussian with the current 
                 #   elite mean and variance
                 #     (Hint: remember that for the first iteration, we instead sample
@@ -79,7 +79,7 @@ class MPCPolicy(BasePolicy):
                 #     (Hint: what existing function can we use to compute rewards for
                 #      our candidate sequences in order to rank them?)
                 # - Update the elite mean and variance
-                A = np.random.normal(loc=elite_mean, scale=elite_var, size=(self.N, *A.shape[1:]))
+                A = np.random.normal(loc=elite_mean, scale=elite_var, size=(num_sequences, horizon, self.ac_dim))
                 elites = select_elites(A=A, obs=obs, num_elites=self.cem_num_elites)
                 elite_mean = self.cem_alpha * elites.mean(axis=0) + (1 - self.cem_alpha) * elite_mean
                 elite_var = self.cem_alpha * elites.var(axis=0) + (1 - self.cem_alpha) * elite_var
