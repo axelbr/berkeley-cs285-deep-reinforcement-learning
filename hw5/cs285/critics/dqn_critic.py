@@ -81,7 +81,6 @@ class DQNCritic(BaseCritic):
         loss.backward()
         utils.clip_grad_value_(self.q_net.parameters(), self.grad_norm_clipping)
         self.optimizer.step()
-
         return {'Training Loss': ptu.to_numpy(loss)}
 
     ####################################
