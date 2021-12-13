@@ -55,6 +55,8 @@ def main():
     parser.add_argument('--use_rnd', action='store_true')
     parser.add_argument('--num_exploration_steps', type=int, default=10000)
     parser.add_argument('--unsupervised_exploration', action='store_true')
+    parser.add_argument('--use_simhash', action='store_true')
+    parser.add_argument('--simhash_k', type=int, default=128)
 
     parser.add_argument('--offline_exploitation', action='store_true')
     parser.add_argument('--cql_alpha', type=float, default=0.0)
@@ -107,7 +109,7 @@ def main():
     if params['unsupervised_exploration']:
         params['explore_weight_schedule'] = ConstantSchedule(1.0)
         params['exploit_weight_schedule'] = ConstantSchedule(0.0)
-        
+
         if not params['use_rnd']:
             params['learning_starts'] = params['num_exploration_steps']
     

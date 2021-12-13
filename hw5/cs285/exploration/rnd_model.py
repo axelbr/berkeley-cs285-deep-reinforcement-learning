@@ -58,7 +58,7 @@ class RNDModel(nn.Module, BaseExplorationModel):
         error = self(ob_no)
         return ptu.to_numpy(error)
 
-    def update(self, ob_no):
+    def update(self, ob_no, ac_na, next_ob_no, re_n, terminal_n):
         # <DONE>: Update f_hat using ob_no
         # Hint: Take the mean prediction error across the batch
         prediction_errors = self(ptu.from_numpy(ob_no))
