@@ -6,7 +6,7 @@ from typing import Callable, Tuple
 import numpy as np
 import torch
 import torch.nn as nn
-import infrastructure.pytorch_util as ptu
+import cs285.infrastructure.pytorch_util as ptu
 from .base_exploration_model import BaseExplorationModel
 
 

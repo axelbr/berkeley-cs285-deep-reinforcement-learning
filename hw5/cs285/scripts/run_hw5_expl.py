@@ -48,6 +48,7 @@ def main():
     )
 
     parser.add_argument('--exp_name', type=str, default='todo')
+    parser.add_argument('--num_timesteps', type=int, default=50000)
 
     parser.add_argument('--eval_batch_size', type=int, default=1000)
     parser.add_argument('--batch_size', type=int, default=256)
@@ -85,7 +86,7 @@ def main():
     params['num_critic_updates_per_agent_update'] = 1
     params['exploit_weight_schedule'] = ConstantSchedule(1.0)
     params['video_log_freq'] = -1 # This param is not used for DQN
-    params['num_timesteps'] = 50000
+    #params['num_timesteps'] = 50000
     params['learning_starts'] = 2000
     params['eps'] = 0.2
     ##################################
